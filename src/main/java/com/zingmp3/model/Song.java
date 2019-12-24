@@ -20,5 +20,5 @@ public class Song {
     private String avatar;
     @Column(nullable = false)
     private String fileMp3;
-    private Date dateUpLoad;
+    private String dateUpLoad;
 }

@@ -1,4 +1,7 @@
 package com.zingmp3.repository;
 
-public interface IRepositorySong {
+import com.zingmp3.model.Song;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IRepositorySong extends JpaRepository<Song, Long> {
 }
