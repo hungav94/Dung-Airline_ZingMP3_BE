@@ -7,28 +7,19 @@ import java.sql.Date;
 
 @Data
 public class SongForm {
-    private long id;
     private String name;
     private String description;
-    private String dateUpLoad;
+    private String dateUpload;
 
     public SongForm() {
     }
 
-    public SongForm(long id, String name, String description, String dateUpLoad) {
-        this.id = id;
+    public SongForm( String name, String description, String dateUpload) {
         this.name = name;
         this.description = description;
-        this.dateUpLoad = dateUpLoad;
+        this.dateUpload = dateUpload;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -46,11 +37,11 @@ public class SongForm {
         this.description = description;
     }
 
-    public String getDateUpLoad() {
-        return dateUpLoad;
+    public String getDateUpload() {
+        return dateUpload;
     }
 
-    public void setDateUpLoad(String dateUpLoad) {
-        this.dateUpLoad = dateUpLoad;
+    public void setDateUpload(String dateUpload) {
+        this.dateUpload = dateUpload;
     }
 }

@@ -1,6 +1,7 @@
 package com.zingmp3.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
 import com.zingmp3.service.ServiceSong;
@@ -15,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-
 @CrossOrigin("*")
 @RestController
 public class ControllerSong {
@@ -31,18 +31,22 @@ public class ControllerSong {
         return new ResponseEntity<>(listSong, HttpStatus.OK);
     }
 
+
     @PostMapping("api/song")
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
-        SongForm songForm = new ObjectMapper().readValue(song_form, SongForm.class);
+        Gson gson = new Gson();
+        SongForm songForm = gson.fromJson(song_form, SongForm.class);
+
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
-        song.setDateUpLoad(songForm.getDateUpLoad());
+        song.setDateUpLoad(songForm.getDateUpload());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
-        return new ResponseEntity<>(song, HttpStatus.CREATED);
+            return new ResponseEntity<>(song, HttpStatus.CREATED);
+
     }
 
     @PutMapping("api/song")
