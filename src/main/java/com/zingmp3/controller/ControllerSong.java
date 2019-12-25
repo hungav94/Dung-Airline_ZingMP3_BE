@@ -36,8 +36,7 @@ public class ControllerSong {
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
-        Gson gson = new Gson();
-        SongForm songForm = gson.fromJson(song_form, SongForm.class);
+        SongForm songForm = new ObjectMapper().readValue(song_form, SongForm.class);
 
         Song song = new Song();
         song.setName(songForm.getName());
