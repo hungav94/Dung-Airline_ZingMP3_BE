@@ -15,6 +15,11 @@ public class ServiceSong implements IServiceSong{
     }
 
     @Override
+    public Song findById(long id) {
+        return repositorySong.findById(id).get();
+    }
+
+    @Override
     public void save(Song song) {
         repositorySong.save(song);
     }
