@@ -15,6 +15,6 @@ public class AdditionalResourceWebConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         String uploadPath = ev.getProperty("uploadPath");
-        registry.addResourceHandler("/image/**").addResourceLocations("file:" + uploadPath);
+        registry.addResourceHandler("/file/**").addResourceLocations("file:" + uploadPath);
     }
 }
