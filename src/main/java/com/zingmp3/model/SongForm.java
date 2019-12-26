@@ -1,13 +1,47 @@
 package com.zingmp3.model;
 
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Date;
+
 @Data
 public class SongForm {
-    private long id;
     private String name;
     private String description;
-    private String avatar;
-    private String dateUpLoad;
+    private String dateUpload;
+
+    public SongForm() {
+    }
+
+    public SongForm( String name, String description, String dateUpload) {
+        this.name = name;
+        this.description = description;
+        this.dateUpload = dateUpload;
+    }
+
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDateUpload() {
+        return dateUpload;
+    }
+
+    public void setDateUpload(String dateUpload) {
+        this.dateUpload = dateUpload;
+    }
 }
