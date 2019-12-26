@@ -1,8 +1,10 @@
 package com.zingmp3.controller;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
+import com.zingmp3.model.SongFormId;
 import com.zingmp3.service.ServiceSong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -36,22 +38,43 @@ public class ControllerSong {
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
-        Gson gson = new Gson();
-        SongForm songForm = gson.fromJson(song_form, SongForm.class);
+        SongForm songForm = new ObjectMapper().readValue(song_form, SongForm.class);
+
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
         song.setDateUpLoad(songForm.getDateUpload());
         doUpload(avatar, fileMp3, song);
-        System.out.println("song: " + song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
+
     }
 
     @PutMapping("api/song")
-    public ResponseEntity<Song> updateSong(@RequestBody Song song) {
+    public ResponseEntity<Void> updateSong(@RequestParam("song") String song_form,
+                                           @RequestParam("avatar") Optional<MultipartFile> avatar) throws IOException {
+        System.out.println(song_form);
+        SongFormId songFormId = new ObjectMapper().readValue(song_form, SongFormId.class);
+
+        Song song = serviceSong.findById(songFormId.getId());
+        song.setId(songFormId.getId());
+        song.setName(songFormId.getName());
+        song.setDescription(songFormId.getDescription());
+        song.setDateUpLoad(songFormId.getDateUpload());
+        doUploadAvatar(avatar, song);
         serviceSong.save(song);
-        return new ResponseEntity<>(song, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    private void doUploadAvatar(Optional<MultipartFile> avatar, Song song) throws IOException {
+        if (avatar.isPresent()) {
+            String fileUploadFileAvatar = env.getProperty("uploadPath").toString();
+            String fileNameAvatar = avatar.get().getOriginalFilename();
+            if (!fileNameAvatar.equals("")) {
+                FileCopyUtils.copy(avatar.get().getBytes(), new File(fileUploadFileAvatar + fileNameAvatar));
+                song.setAvatar(fileNameAvatar);
+            }
+        }
     }
 
     @DeleteMapping("api/song/{id}")
