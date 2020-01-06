@@ -6,12 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ServiceSong implements IServiceSong{
+public class ServiceSong implements IServiceSong {
     @Autowired
     private IRepositorySong repositorySong;
+
     @Override
     public Iterable<Song> findAll() {
         return repositorySong.findAll();
+    }
+
+    @Override
+    public Iterable<Song> findAllByNameContaining(String name) {
+        return repositorySong.findAllByNameContaining(name);
     }
 
     @Override

@@ -27,6 +27,12 @@ public class ControllerSong {
     @Autowired
     Environment env;
 
+    @GetMapping("api/song-search")
+    public ResponseEntity<Iterable<Song>> getSearchSong(@RequestParam("search") String search) {
+        Iterable<Song> listSong = serviceSong.findAllByNameContaining(search);
+        return new ResponseEntity<>(listSong, HttpStatus.OK);
+    }
+
     @GetMapping("api/song")
     public ResponseEntity<Iterable<Song>> getListSong() {
         Iterable<Song> listSong = serviceSong.findAll();
@@ -38,6 +44,7 @@ public class ControllerSong {
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
+        System.out.println("fileMp3: " + fileMp3);
         Gson gson = new Gson();
         SongForm songForm = gson.fromJson(song_form, SongForm.class);
         Song song = new Song();
@@ -93,7 +100,7 @@ public class ControllerSong {
                 song.setAvatar(fileNameAvatar);
             }
             if (!fileNameMp3.equals("")) {
-                FileCopyUtils.copy(fileAvatar.get().getBytes(), new File(fileUploadFileMp3 + fileNameMp3));
+                FileCopyUtils.copy(fileMp3.get().getBytes(), new File(fileUploadFileMp3 + fileNameMp3));
                 song.setFileMp3(fileNameMp3);
             }
         }
