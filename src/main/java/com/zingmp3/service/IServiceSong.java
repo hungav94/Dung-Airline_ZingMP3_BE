@@ -2,6 +2,8 @@ package com.zingmp3.service;
 
 import com.zingmp3.model.Song;
 
+import java.util.List;
+
 public interface IServiceSong {
     Iterable<Song> findAll();
 
@@ -10,4 +12,6 @@ public interface IServiceSong {
     void save(Song song);
 
     void delete(long id);
+
+    List<Song> findByName(String nameSong);
 }

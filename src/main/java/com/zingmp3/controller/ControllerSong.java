@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -26,6 +27,13 @@ public class ControllerSong {
 
     @Autowired
     Environment env;
+
+    @GetMapping("api/song-search/{name}")
+    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name){
+        List<Song> songs;
+        songs = serviceSong.findByName(name);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 
     @GetMapping("api/song")
     public ResponseEntity<Iterable<Song>> getListSong() {
