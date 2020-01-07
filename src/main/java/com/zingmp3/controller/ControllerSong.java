@@ -1,7 +1,7 @@
 package com.zingmp3.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
 import com.zingmp3.model.SongFormId;
@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin("*")
@@ -27,10 +29,11 @@ public class ControllerSong {
     @Autowired
     Environment env;
 
-    @GetMapping("api/song-search")
-    public ResponseEntity<Iterable<Song>> getSearchSong(@RequestParam("search") String search) {
-        Iterable<Song> listSong = serviceSong.findAllByNameContaining(search);
-        return new ResponseEntity<>(listSong, HttpStatus.OK);
+    @GetMapping("api/song-search/{name}")
+    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name){
+        List<Song> songs;
+        songs = serviceSong.findByName(name);
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
     @GetMapping("api/song")
@@ -44,16 +47,16 @@ public class ControllerSong {
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
-        System.out.println("fileMp3: " + fileMp3);
-        Gson gson = new Gson();
-        SongForm songForm = gson.fromJson(song_form, SongForm.class);
+        SongForm songForm = new ObjectMapper().readValue(song_form, SongForm.class);
+
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
-        song.setDateUpLoad(songForm.getDateUpload());
+        song.setDateUpLoad("" + new Date());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
+
     }
 
     @PutMapping("api/song")

@@ -5,6 +5,8 @@ import com.zingmp3.repository.IRepositorySong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ServiceSong implements IServiceSong {
     @Autowired
@@ -13,11 +15,6 @@ public class ServiceSong implements IServiceSong {
     @Override
     public Iterable<Song> findAll() {
         return repositorySong.findAll();
-    }
-
-    @Override
-    public Iterable<Song> findAllByNameContaining(String name) {
-        return repositorySong.findAllByNameContaining(name);
     }
 
     @Override
@@ -33,5 +30,10 @@ public class ServiceSong implements IServiceSong {
     @Override
     public void delete(long id) {
         repositorySong.deleteById(id);
+    }
+
+    @Override
+    public List<Song> findByName(String nameSong) {
+        return repositorySong.findAllByNameContaining(nameSong);
     }
 }
