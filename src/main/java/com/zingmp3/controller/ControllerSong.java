@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,7 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(songFormId.getDateUpload());
+        song.setDateUpLoad(""+new Date());
         doUploadAvatar(avatar, song);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
