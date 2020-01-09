@@ -52,7 +52,7 @@ public class ControllerSong {
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
-        song.setDateUpLoad(songForm.getDateUpload());
+        song.setDateUpLoad(""+new Date());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
@@ -69,7 +69,7 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(""+new Date());
+        song.setDateUpLoad(songFormId.getDateUpload());
         doUploadAvatar(avatar, song);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
