@@ -24,8 +24,9 @@ public class PlayList {
     @Size(min = 6, max = 100)
     private String playlistDescription;
 
+    @NotEmpty
+    private String avatarPlaylist;
+
     @ManyToMany
     private List<Song> songs = new ArrayList<>();
-
-
 }
