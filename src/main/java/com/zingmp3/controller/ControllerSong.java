@@ -1,6 +1,5 @@
 package com.zingmp3.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
@@ -69,7 +68,7 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(songFormId.getDateUpload());
+        song.setDateUpLoad(""+ new Date());
         doUploadAvatar(avatar, song);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

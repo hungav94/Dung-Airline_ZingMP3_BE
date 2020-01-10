@@ -2,35 +2,24 @@ package com.zingmp3.model;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Entity
 @Data
-public class PlayList {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class PlayListForm {
     private long id;
-
-    @NotEmpty
-    @Size(min = 3, max = 100)
     private String playlistName;
-
-    @NotEmpty
-    @Size(min = 6, max = 100)
     private String playlistDescription;
-
-    @NotEmpty
-    private String avatarPlaylist;
-
-    @ManyToMany
     private List<Song> songs = new ArrayList<>();
 
-    public PlayList() {
+    public PlayListForm() {
+    }
+
+    public PlayListForm(long id, String playlistName, String playlistDescription, List<Song> songs) {
+        this.id = id;
+        this.playlistName = playlistName;
+        this.playlistDescription = playlistDescription;
+        this.songs = songs;
     }
 
     public long getId() {
@@ -55,14 +44,6 @@ public class PlayList {
 
     public void setPlaylistDescription(String playlistDescription) {
         this.playlistDescription = playlistDescription;
-    }
-
-    public String getAvatarPlaylist() {
-        return avatarPlaylist;
-    }
-
-    public void setAvatarPlaylist(String avatarPlaylist) {
-        this.avatarPlaylist = avatarPlaylist;
     }
 
     public List<Song> getSongs() {
