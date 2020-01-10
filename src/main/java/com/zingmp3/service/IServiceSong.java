@@ -14,4 +14,6 @@ public interface IServiceSong {
     void delete(long id);
 
     List<Song> findByName(String nameSong);
+
+    List<Song> findAllById(Iterable<Long> ids);
 }

@@ -36,4 +36,9 @@ public class ServiceSong implements IServiceSong {
     public List<Song> findByName(String nameSong) {
         return repositorySong.findAllByNameContaining(nameSong);
     }
+
+    @Override
+    public List<Song> findAllById(Iterable<Long> ids) {
+        return repositorySong.findAllById(ids);
+    }
 }

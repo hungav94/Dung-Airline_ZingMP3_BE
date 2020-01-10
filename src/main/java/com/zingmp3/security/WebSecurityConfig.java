@@ -63,7 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/file/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/api/song",
-                        "/file/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                        "/file/**",
+                        "/api/playlist").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

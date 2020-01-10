@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface IRepositorySong extends JpaRepository<Song, Long> {
     List<Song> findAllByNameContaining(String nameSong);
+
+    List<Song> findAllById(Iterable<Long> ids);
 }
