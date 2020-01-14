@@ -1,5 +1,6 @@
 package com.zingmp3.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
@@ -29,11 +30,12 @@ public class ControllerSong {
     Environment env;
 
     @GetMapping("api/song-search/{name}")
-    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name){
+    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name) {
         List<Song> songs;
         songs = serviceSong.findByName(name);
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
+
 
     @GetMapping("api/song")
     public ResponseEntity<Iterable<Song>> getListSong() {
@@ -51,7 +53,7 @@ public class ControllerSong {
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
-        song.setDateUpLoad(""+new Date());
+        song.setDateUpLoad("" + new Date());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
@@ -68,7 +70,7 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(""+ new Date());
+        song.setDateUpLoad("" + new Date());
         doUploadAvatar(avatar, song);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

@@ -27,7 +27,12 @@ public class PlayList {
     @NotEmpty
     private String avatarPlaylist;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "play_list_songs",
+            joinColumns = {@JoinColumn(name = "songs_id")},
+            inverseJoinColumns = {@JoinColumn(name = "play_list_id")}
+    )
     private List<Song> songs = new ArrayList<>();
 
     public PlayList() {
@@ -72,4 +77,5 @@ public class PlayList {
     public void setSongs(List<Song> songs) {
         this.songs = songs;
     }
+
 }
