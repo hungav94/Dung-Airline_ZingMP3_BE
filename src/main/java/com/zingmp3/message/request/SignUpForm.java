@@ -20,7 +20,7 @@ public class SignUpForm {
     private String email;
 
     @NotEmpty
-    @Size(min = 6, max = 40)
+    @Size(min = 6, max = 100)
     private String password;
 
     private Set<String> role;

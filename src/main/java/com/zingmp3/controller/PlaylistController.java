@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -53,7 +54,7 @@ public class PlaylistController {
         playList.setSongs(playListForm.getSongs());
         doUpload(avatarPlaylist, playList);
         playlistService.save(playList);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(playList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("api/playlist/{id}")

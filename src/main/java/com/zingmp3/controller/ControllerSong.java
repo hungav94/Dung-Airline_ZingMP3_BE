@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,11 +51,10 @@ public class ControllerSong {
         Song song = new Song();
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
-        song.setDateUpLoad(songForm.getDateUpload());
+        song.setDateUpLoad("" + new Date());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
-
     }
 
     @PutMapping("api/song")
@@ -67,7 +67,7 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(songFormId.getDateUpload());
+        song.setDateUpLoad("" + new Date());
         doUploadAvatar(avatar, song);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

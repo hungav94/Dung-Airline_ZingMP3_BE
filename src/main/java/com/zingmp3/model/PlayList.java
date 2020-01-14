@@ -29,4 +29,7 @@ public class PlayList {
 
     @ManyToMany
     private List<Song> songs = new ArrayList<>();
+
+    public PlayList() {
+    }
 }
