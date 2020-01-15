@@ -10,6 +10,7 @@ public class SongForm {
     private String name;
     private String description;
     private String dateUpload;
+    private int listenSong;
 
     public SongForm() {
     }
@@ -20,6 +21,13 @@ public class SongForm {
         this.dateUpload = dateUpload;
     }
 
+    public int getListenSong() {
+        return listenSong;
+    }
+
+    public void setListenSong(int listenSong) {
+        this.listenSong = listenSong;
+    }
 
     public String getName() {
         return name;

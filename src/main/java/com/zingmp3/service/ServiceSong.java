@@ -41,4 +41,16 @@ public class ServiceSong implements IServiceSong {
     public List<Song> findAllById(Iterable<Long> ids) {
         return repositorySong.findAllById(ids);
     }
+
+    @Override
+    public List<Song> findAllByOrderByDateUpLoadSongs() {
+        return repositorySong.findAllByOrderByDateUpLoadDesc();
+    }
+
+    @Override
+    public List<Song> findAllByOrderByListenSongDesc() {
+        return repositorySong.findAllByOrderByListenSongDesc();
+    }
+
+
 }

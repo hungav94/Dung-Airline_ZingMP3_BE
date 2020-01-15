@@ -16,4 +16,8 @@ public interface IServiceSong {
     List<Song> findByName(String nameSong);
 
     List<Song> findAllById(Iterable<Long> ids);
+
+    List<Song> findAllByOrderByDateUpLoadSongs();
+
+    List<Song> findAllByOrderByListenSongDesc();
 }

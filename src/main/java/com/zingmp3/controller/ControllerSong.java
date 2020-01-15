@@ -43,6 +43,11 @@ public class ControllerSong {
         return new ResponseEntity<>(listSong, HttpStatus.OK);
     }
 
+    @GetMapping("/findAllByOderByListenSongDesc")
+    public ResponseEntity<Iterable<Song>> findAllByOrderByListenSong() {
+        List<Song> songs = serviceSong.findAllByOrderByListenSongDesc();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 
     @PostMapping("api/song")
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
@@ -54,10 +59,10 @@ public class ControllerSong {
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
         song.setDateUpLoad("" + new Date());
+        song.setListenSong(songForm.getListenSong());
         doUpload(avatar, fileMp3, song);
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
-
     }
 
     @PutMapping("api/song")
@@ -108,5 +113,11 @@ public class ControllerSong {
                 song.setFileMp3(fileNameMp3);
             }
         }
+    }
+
+    @GetMapping("/sortByDateUpLoadDESC")
+    public ResponseEntity<Iterable<Song>> sortByDateUpLoadDESC() {
+        List<Song> songs = serviceSong.findAllByOrderByDateUpLoadSongs();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 }
