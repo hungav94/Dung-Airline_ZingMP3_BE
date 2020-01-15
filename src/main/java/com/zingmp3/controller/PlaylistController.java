@@ -47,19 +47,18 @@ public class PlaylistController {
     @PostMapping("api/playlist")
     public ResponseEntity<PlayList> createNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatar") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
-        List<Song> songs = serviceSong.findAllById(playListForm.getSongs());
         System.out.println("playList_form: " + playList_form);
         PlayList playList = new PlayList();
         playList.setPlaylistName(playListForm.getPlaylistName());
         playList.setPlaylistDescription(playListForm.getPlaylistDescription());
-        playList.setSongs(songs);
+//        playList.setSongs(songs);
         doUpload(avatarPlaylist, playList);
         playlistService.save(playList);
         return new ResponseEntity<>(playList, HttpStatus.CREATED);
     }
 
     @PutMapping("api/playlist")
-    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
+    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         PlayList playList = playlistService.findById(playListForm.getId());
         List<Song> songs = serviceSong.findAllById(playListForm.getSongs());
@@ -70,7 +69,7 @@ public class PlaylistController {
         playList.setSongs(songs);
         doUpload(avatarPlaylist, playList);
         playlistService.save(playList);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(playList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("api/playlist/{id}")
