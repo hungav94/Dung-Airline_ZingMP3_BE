@@ -18,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -59,12 +58,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/api/auth/**",
-                        "/api/song/",
-                        "/",
+                        "/**",
+                        "/api/song",
                         "/file/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/api/song",
-                        "/file/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+                        "/file/**",
+                        "/api/playlist").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

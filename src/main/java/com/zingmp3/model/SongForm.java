@@ -10,6 +10,7 @@ public class SongForm {
     private String name;
     private String description;
     private String dateUpload;
+    private int listenSong;
 
     public SongForm() {
     }

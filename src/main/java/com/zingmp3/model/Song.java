@@ -21,6 +21,8 @@ public class Song {
     private String fileMp3;
     private String dateUpLoad;
 
+    private int listenSong;
+
     public long getId() {
         return id;
     }

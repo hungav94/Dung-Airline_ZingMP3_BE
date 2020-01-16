@@ -8,9 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ServiceSong implements IServiceSong{
+public class ServiceSong implements IServiceSong {
     @Autowired
     private IRepositorySong repositorySong;
+
     @Override
     public Iterable<Song> findAll() {
         return repositorySong.findAll();
@@ -35,4 +36,21 @@ public class ServiceSong implements IServiceSong{
     public List<Song> findByName(String nameSong) {
         return repositorySong.findAllByNameContaining(nameSong);
     }
+
+    @Override
+    public List<Song> findAllById(Iterable<Long> ids) {
+        return repositorySong.findAllById(ids);
+    }
+
+    @Override
+    public List<Song> findAllByOrderByDateUpLoadSongs() {
+        return repositorySong.findAllByOrderByDateUpLoadDesc();
+    }
+
+    @Override
+    public List<Song> findAllByOrderByListenSongDesc() {
+        return repositorySong.findAllByOrderByListenSongDesc();
+    }
+
+
 }
