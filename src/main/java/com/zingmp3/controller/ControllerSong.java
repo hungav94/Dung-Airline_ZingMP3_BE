@@ -41,6 +41,17 @@ public class ControllerSong {
         return new ResponseEntity<>(listSong, HttpStatus.OK);
     }
 
+    @GetMapping("api/song/{id}")
+    public ResponseEntity<Song> findById(@PathVariable Long id) {
+        Song song = serviceSong.findById(id);
+        return new ResponseEntity<>(song, HttpStatus.OK);
+    }
+
+    @GetMapping("api/song-sort-desc")
+    public ResponseEntity<List<Song>> getListByIdDesc(){
+        List<Song> listSong = serviceSong.findAllByOrderByIdDesc();
+        return new ResponseEntity<>(listSong, HttpStatus.OK);
+    }
 
     @PostMapping("api/song")
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
@@ -107,4 +118,5 @@ public class ControllerSong {
             }
         }
     }
+
 }
