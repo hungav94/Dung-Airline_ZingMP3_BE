@@ -31,6 +31,12 @@ public class PlaylistController {
     @Autowired
     private IServiceSong serviceSong;
 
+    @GetMapping("api/playlist-search/{name}")
+    public ResponseEntity<List<PlayList>> searchByNamePlaylist(@PathVariable("name") String name) {
+        List<PlayList> playLists;
+        playLists = playlistService.findByNamePlayList(name);
+        return new ResponseEntity<>(playLists, HttpStatus.OK);
+    }
 
     @GetMapping("api/playlist")
     public ResponseEntity<Iterable<PlayList>> getAllPlayList() {
@@ -60,7 +66,7 @@ public class PlaylistController {
     }
 
     @PutMapping("api/playlist")
-    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
+    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         PlayList playList = playlistService.findById(playListForm.getId());
         List<Song> songs = serviceSong.findAllById(playListForm.getSongs());

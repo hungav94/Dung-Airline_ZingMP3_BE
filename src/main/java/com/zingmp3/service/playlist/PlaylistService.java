@@ -5,6 +5,8 @@ import com.zingmp3.repository.IPlayListRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlaylistService implements IPlaylistService {
     @Autowired
@@ -27,5 +29,11 @@ public class PlaylistService implements IPlaylistService {
     @Override
     public void delete(long id) {
         playListRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PlayList> findByNamePlayList(String namePlaylist) {
+        return playListRepository.findAllByPlaylistNameContaining(namePlaylist);
+
     }
 }
