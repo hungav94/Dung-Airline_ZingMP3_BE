@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,6 +49,7 @@ public class ControllerSong {
     }
 
     @PostMapping("api/song")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Song> createNewSong(@RequestParam("song") String song_form,
                                               @RequestParam("avatar") Optional<MultipartFile> avatar,
                                               @RequestParam("fileMp3") Optional<MultipartFile> fileMp3) throws IOException {
@@ -64,6 +66,7 @@ public class ControllerSong {
     }
 
     @PutMapping("api/song")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> updateSong(@RequestParam("song") String song_form,
                                            @RequestParam("avatar") Optional<MultipartFile> avatar) throws IOException {
         System.out.println(song_form);
@@ -91,6 +94,7 @@ public class ControllerSong {
     }
 
     @DeleteMapping("api/song/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteSong(@PathVariable long id) {
         serviceSong.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

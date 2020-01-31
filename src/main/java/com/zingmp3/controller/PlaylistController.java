@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +44,7 @@ public class PlaylistController {
     }
 
     @PostMapping("api/playlist")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<PlayList> createNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatar") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         List<Song> songs = serviceSong.findAllById(playListForm.getSongs());
@@ -56,7 +58,8 @@ public class PlaylistController {
     }
 
     @PutMapping("api/playlist")
-    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         PlayList playList = playlistService.findById(playListForm.getId());
         List<Song> songs = serviceSong.findAllById(playListForm.getSongs());
@@ -71,6 +74,7 @@ public class PlaylistController {
     }
 
     @DeleteMapping("api/playlist/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deletePlaylist(@PathVariable long id) {
         playlistService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

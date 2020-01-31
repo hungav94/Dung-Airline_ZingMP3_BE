@@ -23,6 +23,9 @@ public class Song {
 
     private int listenSong;
 
+    public Song() {
+    }
+
     public long getId() {
         return id;
     }
@@ -69,8 +72,5 @@ public class Song {
 
     public void setDateUpLoad(String dateUpLoad) {
         this.dateUpLoad = dateUpLoad;
-    }
-
-    public Song() {
     }
 }
