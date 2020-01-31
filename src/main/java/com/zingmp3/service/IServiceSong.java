@@ -11,6 +11,8 @@ public interface IServiceSong {
 
     void save(Song song);
 
+    void saveList(List<Song> songs);
+
     void delete(long id);
 
     List<Song> findByName(String nameSong);
@@ -18,4 +20,8 @@ public interface IServiceSong {
     List<Song> findAllById(Iterable<Long> ids);
 
     List<Song> findAllByOrderByIdDesc();
+
+    List<Song> findAllByOrderByDateUpLoadSongs();
+
+    List<Song> findAllByOrderByListenSongDesc();
 }

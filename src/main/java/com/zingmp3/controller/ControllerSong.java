@@ -1,9 +1,11 @@
 package com.zingmp3.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zingmp3.model.Song;
 import com.zingmp3.model.SongForm;
 import com.zingmp3.model.SongFormId;
+import com.zingmp3.model.SongListForm;
 import com.zingmp3.service.ServiceSong;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -13,8 +15,10 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Array;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +33,7 @@ public class ControllerSong {
     Environment env;
 
     @GetMapping("api/song-search/{name}")
-    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name){
+    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name) {
         List<Song> songs;
         songs = serviceSong.findByName(name);
         return new ResponseEntity<>(songs, HttpStatus.OK);
@@ -48,9 +52,15 @@ public class ControllerSong {
     }
 
     @GetMapping("api/song-sort-desc")
-    public ResponseEntity<List<Song>> getListByIdDesc(){
+    public ResponseEntity<List<Song>> getListByIdDesc() {
         List<Song> listSong = serviceSong.findAllByOrderByIdDesc();
         return new ResponseEntity<>(listSong, HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllByOderByListenSongDesc")
+    public ResponseEntity<Iterable<Song>> findAllByOrderByListenSong() {
+        List<Song> songs = serviceSong.findAllByOrderByListenSongDesc();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
     @PostMapping("api/song")
@@ -63,7 +73,9 @@ public class ControllerSong {
         song.setName(songForm.getName());
         song.setDescription(songForm.getDescription());
         song.setDateUpLoad("" + new Date());
+        song.setListenSong(songForm.getListenSong());
         doUpload(avatar, fileMp3, song);
+
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
 
@@ -79,8 +91,18 @@ public class ControllerSong {
         song.setId(songFormId.getId());
         song.setName(songFormId.getName());
         song.setDescription(songFormId.getDescription());
-        song.setDateUpLoad(songFormId.getDateUpload());
+        song.setDateUpLoad("" + new Date());
         doUploadAvatar(avatar, song);
+        serviceSong.save(song);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("api/song-view")
+    public ResponseEntity<Void> updateSongView(@RequestParam("song") String song_form) throws JsonProcessingException {
+        SongFormId songFormId = new ObjectMapper().readValue(song_form, SongFormId.class);
+
+        Song song = serviceSong.findById(songFormId.getId());
+        song.setListenSong(songFormId.getListenSong() + 1);
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
@@ -119,4 +141,9 @@ public class ControllerSong {
         }
     }
 
+    @GetMapping("/sortByDateUpLoadDESC")
+    public ResponseEntity<Iterable<Song>> sortByDateUpLoadDESC() {
+        List<Song> songs = serviceSong.findAllByOrderByDateUpLoadSongs();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
 }

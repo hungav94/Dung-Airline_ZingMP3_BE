@@ -7,6 +7,9 @@ public class SongFormId {
     private long id;
     private String name;
     private String description;
+    private String dateUpload;
+    private String avatar;
+    private int listenSong;
 
     public SongFormId() {
     }
@@ -51,6 +54,11 @@ public class SongFormId {
         this.avatar = avatar;
     }
 
-    private String dateUpload;
-    private String avatar;
+    public int getListenSong() {
+        return listenSong;
+    }
+
+    public void setListenSong(int listenSong) {
+        this.listenSong = listenSong;
+    }
 }

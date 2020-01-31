@@ -21,6 +21,11 @@ public class Song {
     private String fileMp3;
     private String dateUpLoad;
 
+    private int listenSong;
+
+    public Song() {
+    }
+
     public long getId() {
         return id;
     }
@@ -69,6 +74,11 @@ public class Song {
         this.dateUpLoad = dateUpLoad;
     }
 
-    public Song() {
+    public int getListenSong() {
+        return listenSong;
+    }
+
+    public void setListenSong(int listenSong) {
+        this.listenSong = listenSong;
     }
 }
