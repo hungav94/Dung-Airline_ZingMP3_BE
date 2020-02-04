@@ -75,10 +75,8 @@ public class ControllerSong {
         song.setDateUpLoad("" + new Date());
         song.setListenSong(songForm.getListenSong());
         doUpload(avatar, fileMp3, song);
-
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
-
     }
 
     @PutMapping("api/song")
