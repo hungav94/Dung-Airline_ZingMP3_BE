@@ -65,6 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/song",
                         "/file/**",
                         "/api/playlist",
+                        "/api/likes",
                         "/api/song-view").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
