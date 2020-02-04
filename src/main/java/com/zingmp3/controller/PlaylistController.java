@@ -77,7 +77,7 @@ public class PlaylistController {
         playList.setSongs(songs);
         doUpload(avatarPlaylist, playList);
         playlistService.save(playList);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(playList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("api/playlist/{id}")

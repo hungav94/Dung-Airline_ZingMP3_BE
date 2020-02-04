@@ -10,7 +10,6 @@ import com.zingmp3.model.User;
 import com.zingmp3.repository.RoleRepository;
 import com.zingmp3.repository.UserRepository;
 import com.zingmp3.security.jwt.JwtProvider;
-import com.zingmp3.security.services.UserPrinciple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,7 +50,7 @@ public class AuthRestAPIs {
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtProvider.generateJwtToken(authentication);
-        UserPrinciple userDetails = (UserPrinciple) authentication.getPrincipal();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getUsername(), userDetails.getAuthorities()));
     }
 
