@@ -73,4 +73,12 @@ public class Song {
     public void setDateUpLoad(String dateUpLoad) {
         this.dateUpLoad = dateUpLoad;
     }
+
+    public int getListenSong() {
+        return listenSong;
+    }
+
+    public void setListenSong(int listenSong) {
+        this.listenSong = listenSong;
+    }
 }

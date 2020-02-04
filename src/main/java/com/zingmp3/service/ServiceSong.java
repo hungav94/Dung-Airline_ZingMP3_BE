@@ -28,6 +28,11 @@ public class ServiceSong implements IServiceSong {
     }
 
     @Override
+    public void saveList(List<Song> songs) {
+        repositorySong.saveAll(songs);
+    }
+
+    @Override
     public void delete(long id) {
         repositorySong.deleteById(id);
     }
@@ -41,6 +46,12 @@ public class ServiceSong implements IServiceSong {
     public List<Song> findAllById(Iterable<Long> ids) {
         return repositorySong.findAllById(ids);
     }
+
+    @Override
+    public List<Song> findAllByOrderByIdDesc() {
+        return repositorySong.findAllByOrderByIdDesc();
+    }
+
 
     @Override
     public List<Song> findAllByOrderByDateUpLoadSongs() {

@@ -4,20 +4,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zingmp3.model.PlayList;
 import com.zingmp3.model.PlayListForm;
 import com.zingmp3.model.Song;
+import com.zingmp3.model.SongForm;
 import com.zingmp3.service.IServiceSong;
 import com.zingmp3.service.playlist.IPlaylistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -44,10 +45,10 @@ public class PlaylistController {
     }
 
     @PostMapping("api/playlist")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<PlayList> createNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatar") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         List<Song> songs = serviceSong.findAllById(playListForm.getSongs());
+        System.out.println("playList_form: " + playList_form);
         PlayList playList = new PlayList();
         playList.setPlaylistName(playListForm.getPlaylistName());
         playList.setPlaylistDescription(playListForm.getPlaylistDescription());
@@ -58,7 +59,6 @@ public class PlaylistController {
     }
 
     @PutMapping("api/playlist")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<PlayList> updateNewPlaylist(@RequestParam("playlist") String playList_form, @RequestParam("avatarPlaylist") Optional<MultipartFile> avatarPlaylist) throws IOException {
         PlayListForm playListForm = new ObjectMapper().readValue(playList_form, PlayListForm.class);
         PlayList playList = playlistService.findById(playListForm.getId());
@@ -70,11 +70,10 @@ public class PlaylistController {
         playList.setSongs(songs);
         doUpload(avatarPlaylist, playList);
         playlistService.save(playList);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(playList, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("api/playlist/{id}")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deletePlaylist(@PathVariable long id) {
         playlistService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);

@@ -60,8 +60,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**",
                         "/**",
                         "/api/song",
-                        "/api/playlist",
                         "/file/**").permitAll()
+                .antMatchers(HttpMethod.GET,
+                        "/api/song",
+                        "/file/**",
+                        "/api/playlist",
+                        "/api/song-view").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
