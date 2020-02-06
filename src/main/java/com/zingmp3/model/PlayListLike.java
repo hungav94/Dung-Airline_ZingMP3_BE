@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+@Entity
 @Data
 public class PlayListLike {
     @Id
@@ -18,4 +19,30 @@ public class PlayListLike {
     @JoinColumn(name = "playlist_id", referencedColumnName = "id")
     private PlayList playList;
 
+    public PlayListLike() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public PlayList getPlayList() {
+        return playList;
+    }
+
+    public void setPlayList(PlayList playList) {
+        this.playList = playList;
+    }
 }

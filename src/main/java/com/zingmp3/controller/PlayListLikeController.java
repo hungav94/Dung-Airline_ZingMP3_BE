@@ -27,21 +27,22 @@ public class PlayListLikeController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("api/playListService")
+    @GetMapping("api/playlistService")
     public ResponseEntity<List<PlayListLike>> getAll() {
         List<PlayListLike> playListLikes = playListLikeService.findAll();
         return new ResponseEntity<>(playListLikes, HttpStatus.OK);
     }
 
-    @GetMapping("api/playListLike/{id}")
+    @GetMapping("api/playlist-like/{id}")
     public ResponseEntity<Iterable<PlayListLike>> findByPlayList(@PathVariable("id") long playList_id) {
         PlayList playList = playlistService.findById(playList_id);
         Iterable<PlayListLike> playListLikes = playListLikeService.findByPlayList(playList);
+        System.out.println("PlaylistLike: " + playListLikes);
         return new ResponseEntity<>(playListLikes, HttpStatus.OK);
     }
 
-    @PostMapping("api/playListLikeService")
-    public ResponseEntity<PlayListLike> addLikes(@RequestParam("playList") String playList_form,
+    @PostMapping("api/playlist-like")
+    public ResponseEntity<PlayListLike> addLikes(@RequestParam("playlist") String playList_form,
                                           @RequestParam("username") String username) throws JsonProcessingException {
         PlayListFormID playListFormID = new ObjectMapper().readValue(playList_form, PlayListFormID.class);
         PlayList playList = playlistService.findById(playListFormID.getId());
@@ -53,7 +54,7 @@ public class PlayListLikeController {
         return new ResponseEntity<>(playListLike, HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("api/playListLike/{id}")
+    @DeleteMapping("api/playlist-like/{id}")
     public ResponseEntity<Void> deleteLike(@PathVariable("id") long id){
         playListLikeService.delete(id);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);

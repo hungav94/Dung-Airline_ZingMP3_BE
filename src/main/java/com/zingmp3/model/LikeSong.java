@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Likes {
+public class LikeSong {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class Likes {
     @JoinColumn(name = "song_id", referencedColumnName = "id")
     private Song song;
 
-    public Likes() {
+    public LikeSong() {
     }
 
     public long getId() {
