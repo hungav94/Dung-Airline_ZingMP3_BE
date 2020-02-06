@@ -45,4 +45,12 @@ public class SongForm {
     public void setDateUpload(String dateUpload) {
         this.dateUpload = dateUpload;
     }
+
+    public int getListenSong() {
+        return listenSong;
+    }
+
+    public void setListenSong(int listenSong) {
+        this.listenSong = listenSong;
+    }
 }
