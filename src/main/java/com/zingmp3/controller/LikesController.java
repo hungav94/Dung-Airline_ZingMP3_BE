@@ -43,9 +43,11 @@ public class LikesController {
     @PostMapping("api/likes")
     public ResponseEntity<Likes> addLikes(@RequestParam("song") String song_form,
                                           @RequestParam("username") String username) throws JsonProcessingException {
+        System.out.println("username: " + username);
         SongFormId songFormId = new ObjectMapper().readValue(song_form, SongFormId.class);
         Song song = serviceSong.findById(songFormId.getId());
         Optional<User> user = userService.findByUsername(username);
+        System.out.println("user: " + user);
         Likes likes = new Likes();
         likes.setSong(song);
         likes.setUser(user.get());

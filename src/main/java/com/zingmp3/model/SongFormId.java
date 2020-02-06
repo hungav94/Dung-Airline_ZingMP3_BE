@@ -10,6 +10,8 @@ public class SongFormId {
     private String dateUpload;
     private String avatar;
     private int listenSong;
+    private int likeSong;
+    private String username;
 
     public SongFormId() {
     }
@@ -60,5 +62,21 @@ public class SongFormId {
 
     public void setListenSong(int listenSong) {
         this.listenSong = listenSong;
+    }
+
+    public int getLikeSong() {
+        return likeSong;
+    }
+
+    public void setLikeSong(int likeSong) {
+        this.likeSong = likeSong;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

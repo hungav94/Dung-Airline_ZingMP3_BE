@@ -14,6 +14,8 @@ public interface IRepositorySong extends JpaRepository<Song, Long> {
 
     List<Song> findAllByOrderByListenSongDesc();
 
+    List<Song> findAllByOrderByLikeSongDesc();
+
     List<Song> findAllByOrderByIdDesc();
 
 }

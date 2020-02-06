@@ -24,4 +24,6 @@ public interface IServiceSong {
     List<Song> findAllByOrderByDateUpLoadSongs();
 
     List<Song> findAllByOrderByListenSongDesc();
+
+    List<Song> findAllByOrderByLikeSongDesc();
 }
