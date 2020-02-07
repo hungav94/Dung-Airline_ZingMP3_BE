@@ -4,11 +4,12 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+@Entity
 @Data
 public class PlayListLike {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
