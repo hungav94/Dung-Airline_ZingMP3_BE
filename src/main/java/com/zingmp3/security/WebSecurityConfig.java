@@ -60,10 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/**",
                         "api/playlist",
                         "/",
-                        "/file/**").permitAll()
-                .antMatchers(HttpMethod.GET,
                         "/api/song/",
-                        "api/playlist",
                         "/file/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/api/song",
