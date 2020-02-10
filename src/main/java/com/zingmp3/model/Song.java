@@ -23,6 +23,10 @@ public class Song {
 
     private int listenSong;
 
+    private int likeSong;
+
+    private String username;
+
     public Song() {
     }
 
@@ -80,5 +84,21 @@ public class Song {
 
     public void setListenSong(int listenSong) {
         this.listenSong = listenSong;
+    }
+
+    public int getLikeSong() {
+        return likeSong;
+    }
+
+    public void setLikeSong(int likeSong) {
+        this.likeSong = likeSong;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

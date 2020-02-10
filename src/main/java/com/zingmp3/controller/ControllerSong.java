@@ -33,7 +33,7 @@ public class ControllerSong {
     Environment env;
 
     @GetMapping("api/song-search/{name}")
-    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name){
+    public ResponseEntity<List<Song>> searchByNameSong(@PathVariable("name") String name) {
         List<Song> songs;
         songs = serviceSong.findByName(name);
         return new ResponseEntity<>(songs, HttpStatus.OK);
@@ -57,9 +57,15 @@ public class ControllerSong {
         return new ResponseEntity<>(listSong, HttpStatus.OK);
     }
 
-    @GetMapping("/findAllByOderByListenSongDesc")
+    @GetMapping("api/song-listen-desc")
     public ResponseEntity<Iterable<Song>> findAllByOrderByListenSong() {
         List<Song> songs = serviceSong.findAllByOrderByListenSongDesc();
+        return new ResponseEntity<>(songs, HttpStatus.OK);
+    }
+
+    @GetMapping("api/song-like-desc")
+    public ResponseEntity<Iterable<Song>> findAllByOrderByLikeSongDesc() {
+        List<Song> songs = serviceSong.findAllByOrderByLikeSongDesc();
         return new ResponseEntity<>(songs, HttpStatus.OK);
     }
 
@@ -74,11 +80,10 @@ public class ControllerSong {
         song.setDescription(songForm.getDescription());
         song.setDateUpLoad("" + new Date());
         song.setListenSong(songForm.getListenSong());
+        song.setUsername(songForm.getUsername());
         doUpload(avatar, fileMp3, song);
-
         serviceSong.save(song);
         return new ResponseEntity<>(song, HttpStatus.CREATED);
-
     }
 
     @PutMapping("api/song")
@@ -103,6 +108,16 @@ public class ControllerSong {
 
         Song song = serviceSong.findById(songFormId.getId());
         song.setListenSong(songFormId.getListenSong() + 1);
+        serviceSong.save(song);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
+    @PutMapping("api/song-like")
+    public ResponseEntity<Void> updateSongLike(@RequestParam("song") String song_form) throws JsonProcessingException {
+        SongFormId songFormId = new ObjectMapper().readValue(song_form, SongFormId.class);
+
+        Song song = serviceSong.findById(songFormId.getId());
+        song.setLikeSong(songFormId.getLikeSong());
         serviceSong.save(song);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

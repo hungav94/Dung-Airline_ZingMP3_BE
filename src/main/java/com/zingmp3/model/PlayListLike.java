@@ -6,28 +6,27 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Likes {
-
+public class PlayListLike {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private int id;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "song_id", referencedColumnName = "id")
-    private Song song;
+    @JoinColumn(name = "playlist_id", referencedColumnName = "id")
+    private PlayList playList;
 
-    public Likes() {
+    public PlayListLike() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -39,11 +38,11 @@ public class Likes {
         this.user = user;
     }
 
-    public Song getSong() {
-        return song;
+    public PlayList getPlayList() {
+        return playList;
     }
 
-    public void setSong(Song song) {
-        this.song = song;
+    public void setPlayList(PlayList playList) {
+        this.playList = playList;
     }
 }

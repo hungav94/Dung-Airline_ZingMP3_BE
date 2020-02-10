@@ -11,6 +11,8 @@ public class SongForm {
     private String description;
     private String dateUpload;
     private int listenSong;
+    private int likeSong;
+    private String username;
 
     public SongForm() {
     }
@@ -51,5 +53,21 @@ public class SongForm {
 
     public void setListenSong(int listenSong) {
         this.listenSong = listenSong;
+    }
+
+    public int getLikeSong() {
+        return likeSong;
+    }
+
+    public void setLikeSong(int likeSong) {
+        this.likeSong = likeSong;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

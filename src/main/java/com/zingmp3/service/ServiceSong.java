@@ -63,5 +63,10 @@ public class ServiceSong implements IServiceSong {
         return repositorySong.findAllByOrderByListenSongDesc();
     }
 
+    @Override
+    public List<Song> findAllByOrderByLikeSongDesc() {
+        return repositorySong.findAllByOrderByLikeSongDesc();
+    }
+
 
 }

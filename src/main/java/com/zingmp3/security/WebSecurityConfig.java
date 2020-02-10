@@ -58,15 +58,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().
                 authorizeRequests()
                 .antMatchers("/api/auth/**",
-                        "api/playlist",
-                        "/",
-                        "/api/song/",
+                        "/**",
+                        "/api/song",
                         "/file/**").permitAll()
                 .antMatchers(HttpMethod.GET,
                         "/api/song",
                         "/file/**",
                         "/api/playlist",
-                        "/api/likes",
                         "/api/song-view").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
                 .anyRequest().authenticated()
                 .and()
