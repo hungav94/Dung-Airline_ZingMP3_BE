@@ -41,6 +41,7 @@ public class PlaylistController {
     public ResponseEntity<PlayList> findById(@PathVariable long id) {
         PlayList playList = playlistService.findById(id);
         System.out.println("playlist: " + playList);
+        System.out.println("songs: " + playList.getSongs());
         return new ResponseEntity<>(playList, HttpStatus.OK);
     }
 

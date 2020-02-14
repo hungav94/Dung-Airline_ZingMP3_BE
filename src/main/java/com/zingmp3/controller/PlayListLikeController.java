@@ -50,7 +50,7 @@ public class PlayListLikeController {
         PlayListLike playListLike = new PlayListLike();
         playListLike.setPlayList(playList);
         playListLike.setUser(user.get());
-        playlistService.save(playList);
+        playListLikeService.save(playListLike);
         return new ResponseEntity<>(playListLike, HttpStatus.ACCEPTED);
     }
 
